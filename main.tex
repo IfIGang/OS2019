@@ -1,0 +1,162 @@
+\documentclass[a4paper,12pt,oneside]{article}
+%for changing amount fo columns in Stichwortverzeichnis
+\usepackage{imakeidx}
+\usepackage[indentunit=10pt,justific=raggedright]{idxlayout}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel} % this is needed for umlauts
+\usepackage[T1]{fontenc}    % this is needed for correct output of umlauts in pdf
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{dirtree}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{ulem}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage{lscape}
+\usepackage{caption}
+\usepackage{pgfgantt}
+\usepackage{longtable}
+\usepackage[explicit]{titlesec}
+\usetikzlibrary{automata, arrows, positioning, shapes.geometric, patterns, decorations, decorations.pathreplacing}
+\usepackage{mdframed}
+\usepackage{pdfpages}
+\usepackage{dsfont} % \mathds{N} etc
+
+%spacing of TOC
+\usepackage{tocbasic}
+\DeclareTOCStyleEntry[
+  beforeskip=.2em plus 1pt,% default is 1em plus 1pt
+  pagenumberformat=\textbf
+]{tocline}{section}
+
+\usepackage{multicol} % For breaking the toc
+
+% thicker overline with \myoverline{arg1} instead of \overline{text}
+\usepackage[usestackEOL]{stackengine}
+\usepackage{scalerel}
+\def\myoverline#1{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{.7\LMpt}{$\SavedStyle#1$}{\rule{\wd0}{2\LMpt}}{O}{c}{F}{F}{S}%
+}}
+\definecolor{carrotorange}{rgb}{0.93, 0.57, 0.13}
+\definecolor{cadmiumgreen}{rgb}{0.2, 0.8, 0.2}
+
+\usepackage{makeidx} 
+\usepackage[hypertexnames=false]{hyperref}
+
+
+% Theorem Definition Style
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+% Framed Environment Definition
+\newenvironment{fdefinition}
+{\begin{mdframed}[linewidth=0.2mm, innerbottommargin=0.5cm]\begin{definition}}
+		{\end{definition}\end{mdframed}}
+
+% Framed Environment Theorem
+\newenvironment{ftheorem}
+{\begin{mdframed}[linewidth=0.2mm, innerbottommargin=0.5cm]\begin{theorem}}
+		{\end{theorem}\end{mdframed}}
+
+% Solo Framed Environment
+\newenvironment{cframe}{\begin{mdframed}[linewidth=0.2mm]}{\end{mdframed}}
+
+% Verbatim style
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+	%
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+}
+
+% Code blocks
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+\lstset{escapechar=@,style=customc}
+
+% Custom column type for typewrite styled text columns in tabular
+\newcolumntype{T}{>{\ttfamily}l}
+
+% Red colored text
+\newcommand{\mcolor}[1]{\textcolor{red}{#1}}
+
+% Padding & Co
+\geometry{
+	left=1.5cm,
+	right=1.5cm,
+	top=2cm,
+	bottom=3cm,
+	bindingoffset=5mm
+}
+
+% Circled numbers
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\newcommand{\cindex}[1]{\index{#1}#1}
+
+\makeindex
+
+\begin{document}
+
+\title{Betriebssysteme}
+\date{Wintersemester 2019/20}
+
+
+\renewcommand{\contentsname}{Inhaltsverzeichnis\vspace*{-0.3cm}}
+
+% %Encomment the following to disable links in TOC
+%\makeatletter
+%\let\Hy@linktoc\Hy@linktoc@none
+%\makeatother
+
+\maketitle
+%\begin{frame}{}
+\begin{multicols}{2}
+  \tableofcontents
+  \end{multicols}
+%\end{frame}
+% Vorlesungen
+\newpage
+\addcontentsline{toc}{part}{Grundlagen Betriebssysteme} %\part{Grundlagen Betriebssysteme}
+%\include{./TeX_files/einleitung1}
+%\include{./TeX_files/prozessverwaltung2}
+%\include{./TeX_files/sync_prozesse3}
+%\include{./TeX_files/speicherverwaltung4}
+%\include{./TeX_files/dateisysteme5}
+\include{./TeX_files/cp01}
+
+\renewcommand{\indexname}{Stichwortverzeichnis} 
+
+% Stichwortverzeichnis soll im Inhaltsverzeichnis auftauchen 
+\addcontentsline{toc}{section}{Stichwortverzeichnis} 
+
+% Stichwortverzeichnis endgueltig anzeigen 
+\idxlayout{columns=3}
+\printindex
+
+\end{document}
