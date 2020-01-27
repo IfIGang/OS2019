@@ -1,6 +1,119 @@
 \section{Checkpoint 1}
 
-
 \subsection{What is an Operating System?}
+Keine klare Definition vorhanden.
+Mögliche Antworten:
+Es ist eine Schicht zwischen Hard- und Software, welche Programme und Resourcen verwaltet.
 
-Bla bla
+\subsection{Why did Operating Systems emerge?}
+Anforderungen an Computer haben sich mit der Zeit verändert.
+Jobverwaltung und bessere Auslastung wurde immer relevanter.
+Betriebsysteme wurden entsprechend zur Verwaltung verschiedener Aufgaben auf einem System.
+
+\subsection{Which of the following statements is false?}
+\begin{enumerate}
+    \item[a:] Operating System evolution required Hardware changes
+    \item[b:] Hardware evolution required Operating System changes
+    \item[c:] Hardware and OS evolved independently
+    \item[d:] There was strong influence in both directions 
+\end{enumerate}
+
+Lösung: Antwort c ist falsch.
+
+\subsection{Describe three critical early inventions in Operating Systems}
+mögliche Lösungen sind:
+\begin{enumerate}
+    \item Time Sharing
+    \item (Pipelines)
+    \item Job Controll (mehrere Programme direkt hintereinander ausführen)
+    \item Multiprogrammierung (andere Programme laufen, während ein Programm auf IO Events wartet)
+\end{enumerate}
+[TODO: auf entsprechenden Folien verweisen]
+
+\subsection{What is UNIX?}
+Eine historische Betriebssystemfamilie, die auch heute noch immer aktuell ist.
+
+\subsection{What is POSIX?}
+Eine stark an UNIX angelehnter Quellcodestandard.
+Beschreibt wie ein System entwickelt werden muss, damit es POSIX Kompatibel ist.
+(Sich wie ein POSIX System verhält.)
+Es ist selbst kein Betriebssystem.
+
+\subsection{Discuss wether POSIX is still relevant today.}
+Keine falsche Antwort, da Diskussion.
+Entscheidend ist die Begründung.
+
+\subsection{Describe the relation between the terms Process, Program, Thread and File}
+Ein Prozess ist laufendes Programm, ein Programm ist eine ausführbare Datei und ein Thread ist Ausführungsstrang eines Prozesses.
+Ein Prozess kann mehrere Threads haben, welche alle im gleichen Kontext laufen. (Sie teilen sich Speicher etc.)
+
+\subsection{What is a shell?}
+Eine (Eingabe- und Ausgabe-) Umgebung in der eine Eingabe als Befehl interpretiert und entsprechend ausgeführt wird.
+(Kommandointerpreter)
+
+\subsection{Describe briefly what happens when you type `ls' into a UNIX shell and press enter}
+Wenn Enter gedrückt wird, wird ein Interrupt erzeugt, welcher vom Betriebssystem abgefangen wird und dann als Eingabe an die Shell gesendet wird.
+Anschließend wird der Befehl `ls' von der Shell als Programmaufruf interpretiert woraufhin die Shell sich selbst forkt und im Kind das Programm `ls' im PATH sucht und ggf.\ startet.
+`ls' nutzt die gleiche Ausgabe wie die Shell und zeigt so alle Dateien.
+Der Elternprozess wartet darauf, dass der Kindprozess terminiert.
+
+\subsubsection{What would have happened if you had typed `cd' instead?}
+`cd' wird als aufruf eines Builtin interpretiert, weshalb die Shell in das HOME Verzeichnis des Nutzers wechselt.
+Es geschieht kein Fork-Exec.
+
+\subsection{In Pseudo-Code, write a program that executes `ls' in a child process and waits in the parent process for the termination of the child process.}
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <...>
+
+int main(){
+    pid_t pid = fork();
+    if(pid == -1){
+        printf("error in fork\n");
+        return -1;
+    }else if(pid == 0){
+        // CHILD
+        char *const args = {"ls", NULL};
+        int ret = execvp("ls", args);
+        // ret == -1
+        printf("error in exec; errno: %d\n", errno);
+        return -1;
+    }else{
+        // PARENT
+        wait(pid);
+        return 0;
+    }
+}
+\end{lstlisting}
+
+%% TODO Export in externe Datei
+
+\subsubsection{Which system calls would you use?}
+wait, fork, exec
+
+\subsection{Briefly describe five tasks of an Operating System}
+Resourcenverwaltung (Storage Managment (Haupt- und Plattenspeicher), Memory Managment, Scheduling (CPU Verwaltung, Prozessormanagment), Device Managment (Geräterverwaltung und Treiber, Interruptbehandlung)),
+Security- und Usermanagment (auch Prozessschutz voreinander)
+
+\subsection{Briefly describe three design goals of an Operating System}
+Portability, Maintability, Security, Performance, Responsive
+
+\subsection{Discuss the reasoning behind the seperation of User- and Kernel Mode. Identify advantages and disadvantages.}
+Schutz der Programme voneinander (Isolation), Benutzerverwaltung und Berechtigungssystem
+
+Ein Nachteil: extra Performance durch ständige Wechsel über Syscalls
+
+\subsection{What is an Interrupt?}
+Eine Unterbrechung des aktuellen Programmablaufes (meist durch externe Geräte).
+Syncrone Interrupts entstehen durch Programmfluss (meist durch Exceptions) und Asyncrone Interrupts entstehen durch Hardwareereignisse.
+
+\subsection{Describe how the Operating System handles incoming Interrupts.}
+CPU hält die Ausführung des laufenden Prozesses an, die CPU sichert den Kontext des aktuellen Prozesses und  behandelt anschließend den Interrupt entsprechend.
+(Meist ist der entsprechende Behandlungscode im Treiber)
+In der Interruptbehandlung wird dem Gerät auch mitgeteilt, dass es jetzt aufhören kann Interrupts zu senden.
+(Meist gleich als erstes)
+Anschließend wird das Programm fortgesetzt, indem sein Kontext wiederhergestellt wird.
+Während der Interruptbehandlung wird Interruptbehandlung weiterer möglicherweise eintretenden Interrupts deaktiviert.
+Entsprechend darf es während der Interruptbehandlung keine Programmierfehler geben.
+Interrupts können auch erst später behandelt werden, je nach Priorität.
