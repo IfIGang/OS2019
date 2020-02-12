@@ -1,5 +1,7 @@
 \section{Checkpoint 1}
 
+\subsection{align with slide numbers}
+
 \subsection{What is an Operating System?}
 Keine klare Definition vorhanden.
 Mögliche Antworten:
@@ -108,6 +110,9 @@ Ein Nachteil: extra Performance durch ständige Wechsel über Syscalls
 Eine Unterbrechung des aktuellen Programmablaufes (meist durch externe Geräte).
 Syncrone Interrupts entstehen durch Programmfluss (meist durch Exceptions) und Asyncrone Interrupts entstehen durch Hardwareereignisse.
 
+\subsection{What can cause an Interrupt?}
+Ein Interrupt kann zum Beispiel ausgel\"ost werden, wenn ein Prozess auf IO Zugriff warten muss.
+
 \subsection{Describe how the Operating System handles incoming Interrupts.}
 CPU hält die Ausführung des laufenden Prozesses an, die CPU sichert den Kontext des aktuellen Prozesses und  behandelt anschließend den Interrupt entsprechend.
 (Meist ist der entsprechende Behandlungscode im Treiber)
@@ -118,15 +123,61 @@ Während der Interruptbehandlung wird Interruptbehandlung weiterer möglicherwei
 Entsprechend darf es während der Interruptbehandlung keine Programmierfehler geben.
 Interrupts können auch erst später behandelt werden, je nach Priorität.
 
-\subsection{Briefly describe five tasks of an Operating System.}
+%\subsection{Briefly describe five tasks of an Operating System.}
+%\begin{itemize}
+%	\setlength\itemsep{-0.5em}
+%	\item Bereitstellen einer Abstraktionsebene zwischen Hardware und Software
+%	\item verwalten der Benutzerrechte
+%	\item Bereitstellen einer grafischen Oberfl\"ache
+%	\item Parallelit\"at und Nebenl\"aufigkeit
+%	\item Verwalten der Hardware Resourcen
+%\end{itemize}
+%
+%\subsection{Briefly describe three design goals of an Operating System.}
+%\missing
+%
+%\subsection{Discuss the reasoning behind the separation of User- and Kernel Mode. Identify advantages and disadvantages.}
+%Der Grund f\"ur die Trennung in Kernel und User Mode ist die Sicherheit. Der Benutzer soll keinen direkten Zugriff auf den Kernel haben. \\Vorteil: Sicherheit \\Nachteil: Perfomance Overhead 
+%
+%\subsection{UPS hab doppelt gearbeitet xD}
+
+\subsection{What is the purpose of a System Call?}
+System Calls werden verwendet um von dem User Mode aktionen im Kernel Mode zu initialisieren.
+
+\subsection{Describe what happens when at runtime when a program uses the function 'getpid'.}
+\missing
+
+\subsection{What are Windows "Personalities"?}
+\begin{enumerate}
+	\item[a:] Independent operating modes of the CPU
+	\item[b:] Distinguished Engineers at the Microsoft Campus in Redmond
+	\item[c:] Seperate classes of applications, and their corresponding subsystems
+	\item[d:] Groups of Users in the System with different Privileges
+\end{enumerate}
+\unsure
+Antwort D
+
+\subsection{Describe the anatomy of a Windows Subsystem.}
+Programme benutzen Subsystems an der Stelle von APIs. Die Subsysteme sind dokumentieren und greifen auf undokumentierte Windows System Service Calls zu.
+
+\subsection{Compare the three types of Subsystem Service Calls.}
 \begin{itemize}
 	\setlength\itemsep{-0.5em}
-	\item Bereitstellen einer Abstraktionsebene zwischen Hardware und Software
-	\item verwalten der Benutzerrechte
-	\item Bereitstellen einer grafischen Oberfl\"ache
-	\item Parallelit\"at und Nebenl\"aufigkeit
-	\item Verwalten der Hardware Resourcen
+	\item vollst\"andig im User Mode implementiert $\rightarrow$ Geometriefkt. PtInRect() IsRectEmpty()
+	\item es werden ein oder mehrere Systemcalls f\"ur die Ausf\"uhrung ben\"otigt $\rightarrow$ ReadFile() WriteFile(); erstellt ind Subsystem Library
+	\item ben\"otigt die Umgebung des Subsystem Process $\rightarrow$ CreateFile(), durch IPC 
 \end{itemize}
 
-\subsection{Briefly describe three design goals of an Operating System.}
-
+\subsection{Name three Operating System components usually located in User- and Kerner Mode(three each)}
+\begin{itemize}
+	\setlength\itemsep{-0.5em}
+	\item User Mode
+	\begin{itemize}
+		\item bla
+	\end{itemize}
+	\item Kernel Mode
+	\begin{itemize}
+		\item bla
+	\end{itemize}
+\end{itemize}
+\missing
