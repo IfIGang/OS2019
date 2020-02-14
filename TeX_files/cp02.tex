@@ -1,3 +1,52 @@
 \section{Checkpoint 2}
 
+<<<<<<< HEAD
 \subsection{title}
+=======
+% align with slide numbers
+\addtocounter{subsection}{1}
+
+\subsection{What is Preemption?}
+In einem System in dem Prozesse in Zeitscheiben unterteilt werden, ist dies die faire Aufteilung dieser Zeitscheiben auf die Prozesse, durch das Unterbrechen des aktuellen Prozesses vom Betriebssystem.
+Jeder Prozess erhält ungefähr gleich viel Rechenzeit.
+
+\subsection{What new challanges did Preemption introduce when compared to cooperative multiprogramming?}
+Programme können an beliebigen Stellen unterbrochen werden.
+Dies wird zu einem Problem, falls eine Resource zwischen verschiedenen Programmen geteielt wird und beide Programme darauf zugreifen.
+
+\subsection{How is Preemption implemented in an operating system kernel?}
+Meist durch einen Timer Interrupt. (Eine Zeitscheibe endet, wenn die Clock ein Signal gibt.)
+Der Scheduler wählt ein neues Programm aus, welches Rechenzeit erhalten soll und der Dispatcher tauscht den aktiven Kontext aus, damit das neue Programm rechnen kann.
+
+\subsection{Compare Concurrency and Parallelism.}
+Concurrency: keine echte Gleichzeitigkeit, sondern eher ein konstantes abwechseln (immer nur aktiver Thread)\\
+Parallelism: zwei Kerne, die echt Gleichzeitig rechnen
+
+\subsection{What is a Critical Section?}
+Ein Codesegment, in dem auf eine geteilte Resource zugegriffen wird.
+
+\subsection{What is the value of shared, and why?}
+In einer Nebenläufigen Ausführung von func\_a und func\_b:
+
+\lstset{language=C}
+\begin{minipage}{.5\textwidth}
+\begin{lstlisting}
+int shared = 0;
+void func_a(void)
+{
+    shared++;
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+\begin{lstlisting}
+
+void func_b(void)
+{
+    shared--;
+}
+\end{lstlisting}
+\end{minipage}
+
+Antwort: -1, 0 oder 1; je nachdem wie die Unterbrechung der Programme erfolgen, da das keine atomaren Anweisungen sind und wir uns somit temporäre Werte in Registern merken müssen, welche durch die Unterbrechung invalide werden.
+>>>>>>> 61b53a806e49fc33d518b7371d9f800431757095
