@@ -46,7 +46,7 @@ Keine falsche Antwort, da Diskussion.
 Entscheidend ist die Begründung.
 
 \subsection{Describe the relation between the terms Process, Program, Thread and File}
-Ein Prozess ist laufendes Programm, ein Programm ist eine ausführbare Datei und ein Thread ist Ausführungsstrang eines Prozesses.
+Ein Prozess ist ein laufendes Programm, ein Programm ist eine ausführbare Datei und ein Thread ist ein Ausführungsstrang eines Prozesses.
 Ein Prozess kann mehrere Threads haben, welche alle im gleichen Kontext laufen. (Sie teilen sich Speicher etc.)
 
 \subsection{What is a shell?}
@@ -145,7 +145,8 @@ Interrupts können auch erst später behandelt werden, je nach Priorität.
 System Calls werden verwendet um von dem User Mode aktionen im Kernel Mode zu initialisieren.
 
 \subsection{Describe what happens when at runtime when a program uses the function `getpid'.}
-\missing
+Wir bekomme die PID(werden ben\"otigt um Prozessen von einander zu entscheiden) des aktuellen Prozesses. Funktion ist in der User Mode Bibliothek beschrieben. Funktion wird aufgerufen und schreibt in ein Register die Syscall Nummer. Cpu wechselt in den Kernel Mode und die Routine f\"ur Systemaufrufe laden. Schaut die Syscall Nummer im Register nach und f\"uhrt dann die entsprechende Funktion hier getpid() aus. Systemaufruf ist ein Synchroner Interrupt.\\
+Funktion $\rightarrow$ User Mode Bibliothek $\rightarrow$ Syscall, Softwareinterrupt $\rightarrow$ Interraptionsroutine bestimmt Funktion an Hand der Nummer im Register $\rightarrow$ Funktion ausf\"uhren und Ergebniss nach Oben schleifen
 
 \subsection{What are Windows ``Personalities''?}
 \begin{enumerate}
@@ -154,8 +155,7 @@ System Calls werden verwendet um von dem User Mode aktionen im Kernel Mode zu in
 	\item[c:] Seperate classes of applications, and their corresponding subsystems
 	\item[d:] Groups of Users in the System with different Privileges
 \end{enumerate}
-\unsure
-Antwort D
+Antwort C
 
 \subsection{Describe the anatomy of a Windows Subsystem.}
 Programme benutzen Subsystems an der Stelle von APIs. Die Subsysteme sind dokumentieren und greifen auf undokumentierte Windows System Service Calls zu.
@@ -175,14 +175,15 @@ Programme benutzen Subsystems an der Stelle von APIs. Die Subsysteme sind dokume
 	\begin{itemize}
 		\item Commandointerpreter (Shell)
 		\item Subsysteme
-		\item \missing
+		\item Services, Dienste
 	\end{itemize}
 	\item Kernel Mode
 	\begin{itemize}
 		\item Grafikengine
 		\item Hardware Abstraction, Treiber, ISR
 		\item Kernel
-		\item \dots
+		\item Memorymanagement
+		\item Management\dots
 	\end{itemize}
 \end{itemize}
 
@@ -212,8 +213,8 @@ Windows: (hybrider Kern,) hauptsächlich Microkern
 
 \subsection{The Windows Kernel is Object Oriented. What is a Handle and what is its role?}
 Ein Handle ist ein Verweis auf ein existierendes Kernel Obejekt.
-Ein Handle gilt nur für jeweils einen Prozess. (Jeder Prozess hat eine eigene Hanle Tabelle.)
-Ein Handle kann genutzt werde, um Systemfunktionen Kernel Objekten zu übergeben ohne das der Kernel diese Objekte ``preisgeben'' muss.
+Ein Handle gilt nur für jeweils einen Prozess. (Jeder Prozess hat eine eigene Handle Tabelle.)
+Ein Handle kann genutzt werden, um Systemfunktionen Kernel Objekten zu übergeben ohne das der Kernel diese Objekte ``preisgeben'' muss.
 
 \subsection{Can you share handles between separate Processes?}
 Nicht direkt. Aber ich kann in die Handle Tabelle eines anderen Prozesses eine weiteres Handle hinzufügen, welches auf das gleiche Kernel Objekt verweist.
