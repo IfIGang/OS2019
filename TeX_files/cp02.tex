@@ -206,7 +206,7 @@ DPC sind dabei Prozessunabhängig, können also in jedem Thread ausgeführt werd
 (Entsprechend sind die Speicheradressen die vom Prozess und identisch zum Zeitpunkt des Interrupts.)
 
 \subsection{A Thread on Windows executes the Function ReadFile(). Describe the flow of activity from the application to the device and back.}
-\textit{Diese Frage muss in der Klausur nicht so ausführlich behandelt werden.}
+\textit{Diese Frage muss in der Klausur nicht so ausführlich beantwortet werden.}
 
 Die ReadFile Funktion ruft die NTReadFile Funktion in Ntdll.dll auf, diese wird einen Systemaufruf zur Kernel Funktion NTReadFile ausführen.
 (Dieser Systemaufruf wird wiederum durch einen Softwareinterrupt realisiert, welche eine ISR aufruft.)
