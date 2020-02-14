@@ -46,3 +46,194 @@ void func_b(void)
 \end{minipage}
 
 Antwort: -1, 0 oder 1; je nachdem wie die Unterbrechung der Programme erfolgen, da das keine atomaren Anweisungen sind und wir uns somit temporäre Werte in Registern merken müssen, welche durch die Unterbrechung invalide werden.
+
+\subsection{Describe the three criteria that correct solutions of the Critical Section problem must fulfill.}
+\begin{itemize}
+    \item Progress: wenn mehrere Prozesse in die Critical Section eintreten wollen, dann darf die Entscheidung wer eintreten darf nicht beliebig lange hinausgezögert werden.
+    \item gegenseitiger Ausschluss: wenn ein Prozess in der Critical Section ist, darf kein anderer Prozess in seiner Critical Section sein.
+    \item Bounded Waiting: wenn ein Prozess in die Critical Section eintreten möchte, dann darf er nicht unendlich lange daran gehindert werden. (aber beliebig lange)
+\end{itemize}
+
+\subsection{Why does this naive approach not solve the critical section problem? Outline a schedule.}
+\begin{lstlisting}
+shared int turn = 0;
+do { // Code for T_i
+    while (turn != i);
+        critical section
+    turn = j;
+        remainder section
+} while (1);
+\end{lstlisting}
+Problem: Progress wird verletzt: wenn ein Thread einen anderen ``überholt'', dann kann es passieren, dass dieser Thread am Eintreten der Critical Section gehindert wird, da der andere Thread noch in der remainder Section ist.
+Der erste Thread muss warten, bis der zweite seine Remainder Section und Critical Section durchlaufen hat, bis er selbst in die Critical Section eintreten darf.
+
+Ein Beispiel: zwei Prozesse P0 und P1.
+turn ist auf 0 und P0 ist in der critical section und P1 in der remainder section.
+P0 verlässt nun seine critical section und turn wird dadurch auf 1 gesetzt.
+Wenn P0 nun vor P1 die remainder section verlässt, kann P0 nicht in die critical section eintreten, da turn immer noch auf 1 ist.
+P0 wird somit am Eintreten gehindert und Progress wird verletzt.
+
+\subsection{Name and describe one well known software algorithm that solves the critical section problem.}
+verschiedene Möglichkeiten:
+
+Baker Algorithmus:
+Jeder Prozess zieht eine Nummer, wenn er in die critical Section eintreten will.
+Die gezogenen Nummer sind monoton steigend, aber nicht streng-monoton steigend.
+Es darf immer der Prozess eintreten, der die kleinste Nummer hat, oder bei Gleichstand zwischen zwei Prozessen der mit der kleinsten ID\@.
+
+Peterson Algorithmus
+
+Dekers Algorithmus
+\todo genauere Erklärungen
+
+\subsection{Discuss whether pure software algorithms are a good solutions to the critical section problem.}
+Nein, denn sie funktionieren nicht für echte Parallelität (Parallelism) und sie sind langsam mit vielen Threads.
+
+\subsection{To mitigate the problems of the software algorithms, hardware approaches are used instead. Which is not one of them?}
+\begin{itemize}
+    \item[a:] test-and-set
+    \item[b:] outlook
+    \item[c:] exchange (compare and swap)
+    \item[d:] interrupt disabling   
+\end{itemize}
+Antwort:
+d wird in Windows genutzt um die Critical Section vor Unterbrechungen abzusichern.
+a und c nutzen beide das Prinzip eine Variable atomar zu setzen und nur in die Critical Section einzutreten, wenn die Operation ein Erfolg war.
+Entsprechend ist c falsch.
+
+\subsection{What is a Semaphore?}
+Eine geteilte \underline{Integer} Variable, deren Zugriff durch das Betriebssystem geschützt wird.
+(Ihre Operationen sind atomar.)
+
+\subsubsection{What operations are defined on Semaphores?}
+wait (Dekrementieren des Wertes, wenn die Semaphore > 0 ist), signal (Inkrementieren)
+
+\subsection{Identify the advantages and disadvantages of using Semaphores over native hardware approaches.}
+Vorteil: Semaphore ist Abstraktion, damit ist die zugrundeliegende Hardware / Betriebssystem irrelevant; die Semaphore kann mehrere Zustände haben; weniger Bussy Waiting als bei test-and-set\\
+Nachteil: (Code) Overhead gegenüber test-and-set
+
+\subsection{What is a Deadlock?}
+Mehrere Prozesse warten auf eine Freigabe (von z.B. einer Semaphore), die durch einen jeweils anderen wartenden Prozess bereits blockiert ist.
+Entsprechend kann kein Prozess weiter arbeiten. 
+
+\subsubsection{Describe how a Deadlock can be the result of careless use of Semaphores.}
+Beispiel: Zwei Prozesse versuchen zwei Semaphoren in unterschiedlicher Reihenfolge zu blockieren.
+
+\subsection{Given the following producer/consumer example program, how could you guard it with semaphores?}
+(Annahme: genau ein Producer und ein Consumer.)
+
+\begin{minipage}{.5\textwidth}
+    \begin{lstlisting}
+void producer(void)
+{
+    int item;
+    while(1) {
+        produce_item(&item);
+        if (count == N) suspend();
+        insert_item(item);
+        count = count + 1;
+        if (count == 1) wake(consumer)
+    }
+}
+    \end{lstlisting}
+    \end{minipage}
+    \begin{minipage}{.5\textwidth}
+    \begin{lstlisting}
+void consumer(void)
+{
+    int item;
+    while(1) {
+        if (count == 0) suspend();
+        remove_item(&item);
+        count = count - 1;
+        if (count == N-1) wake(producer);
+        consume_item(item);
+    }
+}
+    \end{lstlisting}
+    \end{minipage}
+
+Zwei Semaphoren einfügen: einen für den count und einen für N-count (freien Plätze).
+Der Producer wird dann die count Semaphore erhöhen und auf die free Semaphore warten, der Consumer wird genau das Gegenteil tun.
+
+\subsection{Describe the Role of the Dispatcher Objects.}
+Es sind Objekte (im Windows Kern) auf die man warten kann.
+Ein Dispatcher Objekt kann zwei verschiedene Zustände haben: signalisiert oder nicht signalisiert.
+
+\subsection{What does it mean for a Dispatcher Object to be Signaled, or Non-Signaled?}
+Bei nicht Signalisierten Objekten: wartende Threads werden blockiert.\\
+\unsure Bei signalisierten Objekten: ein wartender Thread kann weiterarbeiten.
+
+\subsubsection{Describe for one type of dispatcher object object what can cause it to change these states.}
+Bei Semaphoren: Status ist abhängig vom Wert der Semaphore.\\
+Bei File Objekten: wir können mit einem wait auf das File Object explizit darauf warten, dass IO Operationen auf die Datei fertig werden.\\
+Bei Prozess Objekten: wir können darauf warten, dass der Prozess terminiert.\\
+Bei Timer Objekten: in periodischen Abständen signalisiert.
+
+\subsection{Name two functions of the Windows or UNIX API related to process synchronization and explain their purpose.}
+diverse Möglichkeiten: sem\_wait + sem\_signal (Semaphore Operationen), wait (warten auf Prozess), WaitForSingleObject (warten auf Dispatcher Objekt in Windows) pthread\_join (warten auf Thread), \dots
+
+\subsection{What is the IRQL?}
+Interrupt Request Level - beschreibt die Wichtigkeit des aktuell von der CPU behandelten Interrupts.
+Interrupts unter diesem Level werden später behandelt, Interrupts mit höherem Level sofort.
+(Ist somit ein Zustand der CPU.)
+Liegt zwischen 0 und 32.
+
+\subsection{Describe what tasks the operating system handles at various ranges of IRQLs.}
+0: normaler Zustand\\
+1: (spezielle) APCs (Asyncronous Procedure Call)\\
+2: Speicherverwaltung, Scheduling, \dots\\
+3+: diverse Geräte\\
+in den oberen: PowerFail, Bluescreen
+
+\subsection{What is a Trap?}
+Der Mechanismus der bei einer einkommenden Unterbrechung den aktuellen Thread Zustand sichert.
+(Wir fangen den Thread ein.)
+
+\subsection{What kinds of event can cause a Trap?}
+Alle Interrupts, sysenter / syscall, Exceptions, Page Faults
+
+\subsection{What happens if during interrupt processing an interrupt of lower precedence arrives? What if the precedence is higher?}
+Wenn die Priorität kleiner ist, dann wird der einkommende Interrupt von der CPU ignoriert und werden behandelt, sobald die IRQL wieder sinkt.\\
+Wenn die Priorität höher ist, wird der aktuelle Zustand mittels einer Trap gesichert und der einkommende Interrupt wird behandelt.
+
+\subsection{What are the roles of the Defered and Asynchronous Procedure Calls? (DPC and APC)}
+Beide werden verwendet, falls die Interrupt Service Routine lange dauert.
+Dann kann diese in eine DPC Objekt verpackt werden und später ausgeführt werden.
+(Wenn der IRQL wieder gesunken ist.)
+Damit werden andere Interrupts nicht unnötig blockiert uns eventuelle Verluste dieser Interrupts werden vermieden.\\
+DPC sind dabei Prozessunabhängig, können also in jedem Thread ausgeführt werden, während APC zu einem Prozess zugehörig sind.
+(Entsprechend sind die Speicheradressen die vom Prozess und identisch zum Zeitpunkt des Interrupts.)
+
+\subsection{A Thread on Windows executes the Function ReadFile(). Describe the flow of activity from the application to the device and back.}
+\textit{Diese Frage muss in der Klausur nicht so ausführlich behandelt werden.}
+
+Die ReadFile Funktion ruft die NTReadFile Funktion in Ntdll.dll auf, diese wird einen Systemaufruf zur Kernel Funktion NTReadFile ausführen.
+(Dieser Systemaufruf wird wiederum durch einen Softwareinterrupt realisiert, welche eine ISR aufruft.)
+Diese wird in der Handle Tabelle die entsprechende Datei zum Handle raussuchen.
+Anschließend wird der Treiber für das Gerät auf dem sich die Datei befindet geladen und ausgeführt.
+Der Interrupt ist nun fertig und es wird in den User Mode gewechselt.
+Der aktive Thread wird erst einmal warten.
+Sobald die Festplatte fertig ist mit dem Lesen der Datei, wird sie ein Interrupt schicken, welche einen DPC erzeugt, der die Daten aus der Platte in den Kernelspeicher kopieren wird.
+Anschließend erzeugt dieser DPC einen APC (im User Mode), welcher die Daten aus dem Kernelspeicher in den Prozessspeicher kopieren wird.
+Anschließend wird der APC den Prozess signalisieren, dass er weiterarbeiten kann, was dann wiederum die ReadFile Funktion beenden wird.
+
+\subsection{What is a pipe? Why is it needed?}
+Prozesse sind isoliert, müssen aber eventuell miteinander kommunizieren.
+Die Pipe ist ein Verbindungsstück zwischen zwei Prozessen.
+
+\subsection{What is the difference between a pipe and a socket?}
+Es sind beides Konstrukte, welche zu Prozessen gehören.\\
+In der Pipe ist die Kommunikation nur in eine Richtung.\\
+Ein Socket realisiert eine Server-Client Struktur.
+(Es gibt einen Server-Prozess welcher einen Socket öffnet und Client-Prozesse die sich mit diesem Socket verbinden können.)
+Mit einem Socket können wir in mehrere Richtungen kommunizieren.
+
+\subsection{Pipes and sockets are tied to the lifetime of a process. What other UNIX construct could you use that survives its creating process, and where is it persisted?}
+Named Pipes (FIFO): verhält sich ähnlich zu Dateien, ist aber als Puffer implementiert.
+
+\subsection{Write in Pseudocode (Windows or UNIX semantics) a program that launches two processes and connects them through a pipe.}
+\missing
+
+\subsection{Name two functions of the Windows or UNIX API related to inter-process communication, and explain their purpose.}
+pipe: Erstellen einer Pipe, mkfifo: Erstellen einer Named Pipe, \dots
