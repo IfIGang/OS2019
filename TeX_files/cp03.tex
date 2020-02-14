@@ -17,6 +17,7 @@ Short-term scheduler(Sucht zu jedem Quantum einen neuen Thread aus, Scheduler \"
 
 \subsection{Describe 3 properties related to process and thread control objects.}
 \begin{itemize}
+	\setlength\itemsep{-0.5em}
 	\item Prozess: Speicherbereich, Pfad der ausf\"uhrbaren Datei
 	\item Thread: CPU Kontext, Schedulingzustand
 	\item Beides: Nicewert(Priorit\"aten), ID
@@ -40,8 +41,37 @@ Ein Quantum ist eine feste Zeitscheibe, welche angibt wie lange ein Prozess rech
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Pictures/scheduling_dia}
-	\caption{bla}
-	\label{fig:schema01}
 \end{figure}
 
 \subsection{When are scheduling decisions made?}
+Am Ende von jedem Quantum. Welcher Thread als n\"achstes in \textbf{running} darf. Immer wenn ein neuer thread im system ankommt.
+
+\subsection{What are the optimiztion criteria of a scheduler?}
+\begin{itemize}
+	\setlength\itemsep{-0.5em}
+	\item Resposivit\"at
+	\item Durchsatz
+	\item Wartezeit
+	\item Turn Arount Time(Zeit vom ersten Ausf\"uhren eines Threads bis zum letzten Ausf\"uhren)
+	\item Auslast der CPU 
+\end{itemize}
+
+\subsection{Draw a FIFO Gantt Chart for the given taskset. Assume a context switch takes no time.}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.25\linewidth]{Pictures/scheduling_gantt_table_fifo}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.25\linewidth,angle=90,origin=c]{Pictures/scheduling_gantt_dia_fifo}
+\end{figure}
+
+\subsection{Draw a Round Robin Gantt chart for the given taskset. Assume a context switch takes not time, use quantum of length 3}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.25\linewidth]{Pictures/scheduling_gantt_table_rr}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.25\linewidth,angle=90,origin=c]{Pictures/scheduling_gantt_dia_rr}
+\end{figure}
