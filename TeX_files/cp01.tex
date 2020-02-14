@@ -146,7 +146,7 @@ Interrupts können auch erst später behandelt werden, je nach Priorität.
 System Calls werden verwendet um von dem User Mode aktionen im Kernel Mode zu initialisieren.
 
 \subsection{Describe what happens when at runtime when a program uses the function `getpid'.}
-Wir bekomme die PID(werden ben\"otigt um Prozessen von einander zu entscheiden) des aktuellen Prozesses. Funktion ist in der User Mode Bibliothek beschrieben. Funktion wird aufgerufen und schreibt in ein Register die Syscall Nummer. Cpu wechselt in den Kernel Mode und die Routine f\"ur Systemaufrufe laden. Schaut die Syscall Nummer im Register nach und f\"uhrt dann die entsprechende Funktion hier getpid() aus. Systemaufruf ist ein Synchroner Interrupt.\\
+Wir bekomme die PID (werden ben\"otigt um Prozessen von einander zu entscheiden) des aktuellen Prozesses. Funktion ist in der User Mode Bibliothek beschrieben. Funktion wird aufgerufen und schreibt in ein Register die Syscall Nummer. Cpu wechselt in den Kernel Mode und die Routine f\"ur Systemaufrufe laden. Schaut die Syscall Nummer im Register nach und f\"uhrt dann die entsprechende Funktion hier getpid() aus. Systemaufruf ist ein Synchroner Interrupt.\\
 Funktion $\rightarrow$ User Mode Bibliothek $\rightarrow$ Syscall, Softwareinterrupt $\rightarrow$ Interraptionsroutine bestimmt Funktion an Hand der Nummer im Register $\rightarrow$ Funktion ausf\"uhren und Ergebniss nach Oben schleifen
 
 \subsection{What are Windows ``Personalities''?}
@@ -184,7 +184,7 @@ Programme benutzen Subsystems an der Stelle von APIs. Die Subsysteme sind dokume
 		\item Hardware Abstraction, Treiber, ISR
 		\item Kernel
 		\item Memorymanagement
-		\item Management\dots
+		\item \dots
 	\end{itemize}
 \end{itemize}
 
@@ -210,7 +210,7 @@ Monolithic Kernel: mächtiger Kern mit vielen Funktionen im Kernel Mode, wenig D
 
 \subsubsection{Which one would you use to describe Windows and which one for Linux?}
 Linux: Monolith
-Windows: (hybrider Kern,) hauptsächlich Microkern
+Windows: (hybrider Kern), hauptsächlich Microkern
 
 \subsection{The Windows Kernel is Object Oriented. What is a Handle and what is its role?}
 Ein Handle ist ein Verweis auf ein existierendes Kernel Obejekt.
