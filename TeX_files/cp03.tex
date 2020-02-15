@@ -89,5 +89,146 @@ Am Ende von jedem Quantum. Welcher Thread als n\"achstes in \textbf{running} dar
 \subsection{Calculate for each thread waiting time, turnaround time, throughput and compare}
 \begin{itemize}
 	\setlength\itemsep{-0.5em}
-	\item \textbf{waiting time}
+	\item \textbf{waiting time} eintreten in die Queue bis zur Ausf\"uhrung der ersten Instruktion
+	\item $Time Of First Instruction - ArrivalTime = WaitingTime$
+	\begin{multicols}{3}
+	\item FIFO
+	\begin{itemize}
+		\item $T_1=0$
+		\item $T_2=8-2=6$
+		\item $T_3 = 14-2=12$
+		\item $T_4 = 20-4=16$
+	\end{itemize}
+	\columnbreak
+	\item RR
+	\begin{itemize}
+		\item $T_1 = 0$
+		\item $T_2 = 3-2=1$
+		\item $T_3 = 6-2=4$
+		\item $T_4 = 12-4=8$
+	\end{itemize}
+	\columnbreak
+	\item RR + Prio
+	\begin{itemize}
+		\item $T_1 = 0$
+		\item $T_2 = 0$
+		\item $T_3 = 8-2=6$
+		\item $T_4 = 5-4=1$
+	\end{itemize}
+	\end{multicols}
+	\item	\textbf{Turn Around Time} Zeit die der Task im System verbringt
+	\begin{multicols}{3}
+		\item FIFO
+		\begin{itemize}
+			\item $T_1= Burst = 8$
+			\item $T_2=Burst=6$
+			\item $T_3 =Burst=6$
+			\item $T_4 =Burst=10$
+		\end{itemize}
+		\columnbreak
+		\item RR
+		\begin{itemize}
+			\item $T_1 = 23$
+			\item $T_2 = 18-3=15$
+			\item $T_3 = 21-6=15$
+			\item $T_4 = 30-12=18$
+		\end{itemize}
+		\columnbreak
+		\item RR + Prio
+		\begin{itemize}
+			\item $T_1 = 29$
+			\item $T_2 = 14-2=12$
+			\item $T_3 = 23-8=15$
+			\item $T_4 = 30-5=25$
+		\end{itemize}
+	\end{multicols}
+	\item \textbf{response time} Eintritt in die Warteschlange bis zur erste Antwort des BS.
+	\item \textbf{throuput} Menge der Threads pro Zeiteinheit. Hier: 4 Threads/30 Zeiteinheiten(auf Grund der Annahme, Kontextwechsel==0 !)
 \end{itemize}
+
+\subsection{Describe the problem of thread starvation in relation to priority schedulers.}
+Ein Thread mit hoher Priorit\"at h\"alt einen Thread mit niedriger Priorit\"at vom laufen ab.
+
+\subsection{What is a multilevel queue scheduler? Linux and Windows both contain multilevel queue schedulers. Name an example for a queue level and describe what properties threads in this queue have.}
+Scheduler der mehrere queues hat. In einander verschachtelt.\\
+Windows: 16 Prios + 16 Realtime Prios (Algorithmen)\\
+Linux: FIFO, RR + Batch, Idle\\
+\missing\\
+\unsure
+
+\subsection{Name 2 functions related to process or thread creation.}
+Linux: PThreadcreate(), fork()\\Windows: CreateProcess(), CreateThread()
+\subsubsection{Name 2 functions related to process or thread termination.}
+Linux: exit(), pthreadexit()\\Windows: kill(), abort()
+
+\subsection{Compare the Linux semantics of process creation (fork/exec) to the windows semantics of process creation (CreateProcess).}
+Linux fork(), exec() habe ich 2 Funktionen in den ich Sachen machen kann.\\
+Windows in CreateProcess kann ich keine Sachen machen und ich habe nur eine Funktion. Parameter\"ubergabe f\"ur Pipes als Argument integriert.
+
+\subsection{What are the advantages and disadvantages of multithreading in a programm?}
+Wir m\"ussen unsere geteilten Resourcen vor einander sch\"utzen. Wir k\"onnen eine h\"ohere Auslastung des Systems erreichen.
+
+\subsection{Compare User Mode Threads to Kernel Mode Threads. When would you use which?}
+Kernel Mode Threads sind Threads die wirklich auf Threads im Kernel abbilden. Umgekehrt f\"ur User Mode Threads.
+
+\subsection{What are Fibers?}
+\begin{itemize}
+	\setlength\itemsep{-0.5em}
+	\item[a:] User Mode Threads on Windows
+	\item[b:] The Windows equivalent of UNIX pipes
+	\item[c:] Units of time counted in the Linux Kernel
+	\item[d:] Users in a traditional UNIX system
+\end{itemize}
+Antwort \textbf{A}
+
+\subsection{What are cgroups?}
+\begin{itemize}
+	\setlength\itemsep{-0.5em}
+	\item[a:] groups of capabilities of an executable
+	\item[b:] groups of redundant file system entries
+	\item[c:] isolated process control groups in Linux
+	\item[d:] groups of users in Windows
+\end{itemize}
+Antwort \textbf{C}: Prozessgruppen die voneinander isoliert werden. Bsp. Docker
+
+\subsection{Describe the specific challenges of real-time scheduling. What is the difference between soft and hard real-time?}
+Software die mit Deadlines umgehen k\"onnen muss. Soft: Dienst degradiert Bsp. Youtube, Hard: Autokontrolle, Flugzeugkontrolle $\rightarrow$ Unfall, Katastrophe\\
+Sehr schwierig, weil man kann die Verz\"ogerungen nicht im Vorraus kennen(Caches, Interrupts)
+
+\subsection{Describe one of the three discussed approaches of starvation avoidance.}
+PrioBoosting on Windows\\PrioAgeing, Niceness on Linux\\
+PrioBoosting: Thread bekommt kurz eine sehr hohe Prio sinkt dann aber wieder ab\\
+PrioAgeing: Threads werden St\"uck f\"ur St\"uck abgesenkt
+
+\subsection{What is priority inversion?}
+Thread mit niedriger Prio h\"alt Thread mit hoher Prio vom laufen ab $\rightarrow$ Locks\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Pictures/priority_inversion}
+\end{figure}
+
+\subsection{Which of the following is not a queue level in Completely Fair Scheduler (CFS)?}
+\begin{itemize}
+	\setlength\itemsep{-0.5em}
+	\item[a:] SCHED\_BATCH
+	\item[b:] SCHED\_HIGH
+	\item[c:] SCHED\_RR
+	\item[d:] SCHED\_FIFO
+\end{itemize}
+Antwort \textbf{b}: ist Ausgedacht von dem Dozenten
+
+\subsection{Describe the concept of niceness in relation to the Linux Completely Fair Scheduler (CFS).}
+Wir haben einen relativen Wert zwischen $\pm$20. Der Wert beschreibt das Verh\"altnis L\"ange der Ausf\"uhrungszeit, die die Threads zu einander bekommen mit einer Nicewert Differenz von ca 1,25 entsprechend der Laufzeit.\\Ein Thread der 1 niedrigeren Nicewert hat als ein anderer Thread, wird 1,25 mal so lange ran kommen.
+
+\subsection{What is thread affinity? Compare hard affinity and soft affinity.}
+Bitmaske, welche auf einem Multicore System festlegt auf welchen Core ich laufen darf. Ich darf auf den Kernen laufen, auf denen meine Affinit\"atsmaske eine 1 hat.\\
+Bei harter Affinit\"at kann dies manuell eingestellt werden.\\
+Bei softer Affinit\"at wird dem Thread zu erst der Core zugewiesen, welcher am besten ist. Beim Fortsetzen wird versucht wieder diesen Core zu benutzen da hier alle Daten schon vorhanden sind.
+
+\subsection{On a high level, outline the similarities and differences of the Windows and Linux Scheduler.}
+Gemeinsamkeiten: Priorit\"aten\\
+Linux: Nicewerte\\
+Windows: \\
+$\dots$\\
+\missing
