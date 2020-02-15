@@ -89,5 +89,23 @@ Am Ende von jedem Quantum. Welcher Thread als n\"achstes in \textbf{running} dar
 \subsection{Calculate for each thread waiting time, turnaround time, throughput and compare}
 \begin{itemize}
 	\setlength\itemsep{-0.5em}
-	\item \textbf{waiting time}
+	\item \textbf{waiting time} eintreten in die Queue bis zur Ausf\"uhrung der ersten Instruktion
+	\item $Time Of First Instruction - ArrivalTime = WaitingTime$
+	\begin{multicols}{2}
+	\item FIFO
+	\begin{itemize}
+		\item $T_1=0$
+		\item $T_2=8-2=6$
+		\item $T_3 = 14-2=12$
+		\item $T_4 = 20-4=16$
+	\end{itemize}
+	\columnbreak
+	\item RR
+	\begin{itemize}
+		\item $T_1 = 0$
+		\item $T_2 = 3-2=1$
+		\item $T_3 = 6-2=4$
+		\item $T_4 = 12-4=8$
+	\end{itemize}
+\end{multicols}
 \end{itemize}
