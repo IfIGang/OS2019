@@ -1,13 +1,13 @@
-\section{Checkpoint 4}
+\section{Checkpoint 4 - Memory Management}
 
 % align with slide numbers
 \addtocounter{subsection}{1}
 
-\subsection{What is the role of the Memory Management Unit (MMU)}
+\subsection{\important What is the role of the Memory Management Unit (MMU)}
 Sie übersetzt logische (Adresse im Programm) auf physikalische Adressen (Adresse auf Festplatte).
 (Passiert bei jedem Speicherzugriff neu.)
 
-\subsection{What is the difference between virtual / logical Adresses and physikal adresses?}
+\subsection{\important What is the difference between virtual / logical Adresses and physical adresses?}
 Der physische Bereich existiert genau ein mal.
 Seine Größe ist abhängig von der Anzahl der Module.\\
 Es gibt einen virtuelle Bereich für jeden Prozess.
@@ -26,7 +26,7 @@ interne Fragmentierung: Ein Prozess nutzt nicht das gesamte Segment, das er rese
 sehr unflexibel in Speichergröße: Häufig wird deswegen mehr Speicher reserviert, was aber zu mehr Fragmentierung führt.\\
 Anzahl der Prozesse ist limitiert durch die Größe der reservierten Speicher.
 
-\subsection{Describe Paging. How is it different from Segmentation, and how does it address the shortcumings of Segmentation?}
+\subsection{Describe Paging. \important How is it different from Segmentation, and how does it address the shortcumings of Segmentation?}
 Ein Prozess kann mehrere Speicherbereiche (Pages) haben.
 (Anders als bei Segmentation.)
 Die Anzahl der Pages ist dabei dynamisch, also zur Laufzeit, festgelegt.\\
@@ -44,7 +44,7 @@ In der Praxis ist es nur eine Liste mit physichen Page Frame (Nummern), und die 
 Um Speicherplatz zu sparen, da eine Page Table sehr groß ist. Damit müssen wir nur die Page Table Einträge wirklich ausfüllen, welche wir auch verwenden.
 (Beispiel: Bei Intel 64-Bit Systemen gibt es vier Ebenen an Page Tables.)
 
-\subsection{Name two bits associated with each Page Table Entry and describe their purpose.}
+\subsection{\important Name two bits associated with each Page Table Entry and describe their purpose.}
 Dirty: wurde auf die Page geschrieben? Wenn ja, müssen wir sie abspeichern, bevor wir sie wegwerfen.\\
 Read/Write/Execute: Berechtigungsbits\\
 Valid: wenn die Page eine gültige Abbildung im physikalischen Speicher hat. (Wenn das Valid Bit nicht gesetzt ist, darf auf die Page nicht zugegriffen werden.)\\
@@ -110,7 +110,7 @@ $$
 \subsection{What is the maximum size of a process working set, assuming that no reserved OS pages are part of the working set (\ref{WorkingSet})?}
 Ein Prozess kann maximal $12 \MiB$ an Speicher reserviert haben.
 
-\subsection{What is a Page Fault?}
+\subsection{\important What is a Page Fault?}
 Zugriff auf eine Page auf der das Valid Bit nicht gesetzt ist. Ein Page Fault löst wiederum einen Interrupt aus.
 
 \subsection{What is the difference between a Soft Page Fault and a Hard Page Fault?}
@@ -120,7 +120,7 @@ Hard Page Fault: Die Page muss komplett neu in den Hauptspeicher (von der Platte
 \subsection{Name two different reasons for which a memory access coul produce a Page Fault.}
 Daten sind bereits ausgelagert und befinden sich nicht mehr im Hauptspeicher, Wir schreiben auf eine Copy-On-Write Page, Zugriff auf reservierten aber nicht committeden Speicher (\ref{ResCom}), wir greifen auf eine Page zu, auf die wir keine Berechtigung haben, wir greifen auf Speicher zu an dem sich noch keine Page befindet
 
-\subsection{What is a Working Set?\label{WorkingSet}}
+\subsection{\important What is a Working Set?\label{WorkingSet}}
 Menge aller Hauptspeicherseiten auf die ein Prozess zugreifen kann, ohne ein Page Fault zu erzeugen.
 
 \subsection{What is the role of the Modified, Standby, Free, Zero and Bad Page Lists?}
@@ -149,7 +149,7 @@ Working Set / Modified / Standby nach Free: wenn Prozess terminiert
 \subsection{What is the purpose of the Page Frame Number Database?}
 Struktur bei der für jede physikalische Page Frame ein Eintrag existiert.
 
-\subsection{Describe the page replacement algorithms First-In-First-Out (FIFO), Second Chance, and Least-Recently-Used (LRU).}
+\subsection{\important Describe the page replacement algorithms First-In-First-Out (FIFO), Second Chance, and Least-Recently-Used (LRU).}
 Page replacement: wenn eine Page aus dem Working Set in die Modfied / Standby List verschoben wird.\\
 \begin{itemize}
     \item[FIFO:] Die alteste Page Frame wird ausgelagert
@@ -212,7 +212,7 @@ Eine Guard Page kann genutzt werden um Zugriff auf nicht reservierten Speicher o
 \subsection{How do operating systems implement shared memory?}
 Ein Eintrag in der Page Table von zwei Prozessen zeigt auf die gleiche (physikalische) Page Frame.
 
-\subsection{What is Copy-on-Write (CoW) memory, and what is it used for?}
+\subsection{\important What is Copy-on-Write (CoW) memory, and what is it used for?}
 Bei einem fork eines Prozesses, wird der Speicher in beiden Prozessen als CoW markiert.
 Die physikalische Page Frame ist dabei identisch.
 Sobald ein Prozess dann aber in diesen geteielten Speicher schreiben will, wird er kopiert, damit jeder Prozess seinen eigenen (unabhängigen) Speicher hat.

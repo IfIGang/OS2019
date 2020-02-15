@@ -1,9 +1,9 @@
-\section{Checkpoint 2}
+\section{Checkpoint 2 - Concurrency}
 
 % align with slide numbers
 \addtocounter{subsection}{1}
 
-\subsection{What is Preemption?}
+\subsection{\important What is Preemption?}
 In einem System in dem Prozesse in Zeitscheiben unterteilt werden, ist dies die faire Aufteilung dieser Zeitscheiben auf die Prozesse, durch das Unterbrechen des aktuellen Prozesses vom Betriebssystem.
 Jeder Prozess erhält ungefähr gleich viel Rechenzeit.
 
@@ -15,11 +15,11 @@ Dies wird zu einem Problem, falls eine Resource zwischen verschiedenen Programme
 Meist durch einen Timer Interrupt. (Eine Zeitscheibe endet, wenn die Clock ein Signal gibt.)
 Der Scheduler wählt ein neues Programm aus, welches Rechenzeit erhalten soll und der Dispatcher tauscht den aktiven Kontext aus, damit das neue Programm rechnen kann.
 
-\subsection{Compare Concurrency and Parallelism.}
+\subsection{\important Compare Concurrency and Parallelism.}
 Concurrency: keine echte Gleichzeitigkeit, sondern eher ein konstantes abwechseln (immer nur aktiver Thread)\\
 Parallelism: zwei Kerne, die echt Gleichzeitig rechnen
 
-\subsection{What is a Critical Section?}
+\subsection{\important What is a Critical Section?}
 Ein Codesegment, in dem auf eine geteilte Resource zugegriffen wird.
 
 \subsection{What is the value of shared, and why?}
@@ -101,7 +101,7 @@ d wird in Windows genutzt um die Critical Section vor Unterbrechungen abzusicher
 a und c nutzen beide das Prinzip eine Variable atomar zu setzen und nur in die Critical Section einzutreten, wenn die Operation ein Erfolg war.
 Entsprechend ist c falsch.
 
-\subsection{What is a Semaphore?}
+\subsection{\important What is a Semaphore?}
 Eine geteilte \underline{Integer} Variable, deren Zugriff durch das Betriebssystem geschützt wird.
 (Ihre Operationen sind atomar.)
 
@@ -112,7 +112,7 @@ wait (Dekrementieren des Wertes, wenn die Semaphore > 0 ist), signal (Inkrementi
 Vorteil: Semaphore ist Abstraktion, damit ist die zugrundeliegende Hardware / Betriebssystem irrelevant; die Semaphore kann mehrere Zustände haben; weniger Bussy Waiting als bei test-and-set\\
 Nachteil: (Code) Overhead gegenüber test-and-set
 
-\subsection{What is a Deadlock?}
+\subsection{\important What is a Deadlock?}
 Mehrere Prozesse warten auf eine Freigabe (von z.B. einer Semaphore), die durch einen jeweils anderen wartenden Prozess bereits blockiert ist.
 Entsprechend kann kein Prozess weiter arbeiten. 
 
@@ -173,7 +173,7 @@ Bei Timer Objekten: in periodischen Abständen signalisiert.
 \subsection{Name two functions of the Windows or UNIX API related to process synchronization and explain their purpose.}
 diverse Möglichkeiten: sem\_wait + sem\_signal (Semaphore Operationen), wait (warten auf Prozess), WaitForSingleObject (warten auf Dispatcher Objekt in Windows) pthread\_join (warten auf Thread), \dots
 
-\subsection{What is the IRQL?}
+\subsection{\important What is the IRQL?}
 Interrupt Request Level - beschreibt die Wichtigkeit des aktuell von der CPU behandelten Interrupts.
 Interrupts unter diesem Level werden später behandelt, Interrupts mit höherem Level sofort.
 (Ist somit ein Zustand der CPU.)
@@ -218,7 +218,7 @@ Sobald die Festplatte fertig ist mit dem Lesen der Datei, wird sie ein Interrupt
 Anschließend erzeugt dieser DPC einen APC (im User Mode), welcher die Daten aus dem Kernelspeicher in den Prozessspeicher kopieren wird.
 Anschließend wird der APC den Prozess signalisieren, dass er weiterarbeiten kann, was dann wiederum die ReadFile Funktion beenden wird.
 
-\subsection{What is a pipe? Why is it needed?}
+\subsection{\important What is a pipe? Why is it needed?}
 Prozesse sind isoliert, müssen aber eventuell miteinander kommunizieren.
 Die Pipe ist ein Verbindungsstück zwischen zwei Prozessen.
 

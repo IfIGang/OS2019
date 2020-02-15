@@ -1,4 +1,4 @@
-\section{Checkpoint 1}
+\section{Checkpoint 1 - Concepts}
 
 % align with slide numbers
 \addtocounter{subsection}{1}
@@ -46,7 +46,7 @@ Es ist selbst kein Betriebssystem.
 Keine falsche Antwort, da Diskussion.
 Entscheidend ist die Begründung.
 
-\subsection{Describe the relation between the terms Process, Program, Thread and File}
+\subsection{\important Describe the relation between the terms Process, Program, Thread and File}
 Ein Prozess ist ein laufendes Programm, ein Programm ist eine ausführbare Datei und ein Thread ist ein Ausführungsstrang eines Prozesses.
 Ein Prozess kann mehrere Threads haben, welche alle im gleichen Kontext laufen. (Sie teilen sich Speicher etc.)
 
@@ -102,12 +102,12 @@ Security- und Usermanagment (auch Prozessschutz voreinander)
 \subsection{Briefly describe three design goals of an Operating System}
 Portability, Maintability, Security, Performance, Responsive
 
-\subsection{Discuss the reasoning behind the seperation of User- and Kernel Mode. Identify advantages and disadvantages.}
+\subsection{\important Discuss the reasoning behind the seperation of User- and Kernel Mode. Identify advantages and disadvantages.}
 Schutz der Programme voneinander (Isolation), Benutzerverwaltung und Berechtigungssystem
 
 Ein Nachteil: extra Performance durch ständige Wechsel über Syscalls
 
-\subsection{What is an Interrupt?}
+\subsection{\important What is an Interrupt?}
 Eine Unterbrechung des aktuellen Programmablaufes (meist durch externe Geräte).
 Syncrone Interrupts entstehen durch Programmfluss (meist durch Exceptions) und Asyncrone Interrupts entstehen durch Hardwareereignisse.
 
@@ -142,7 +142,7 @@ Interrupts können auch erst später behandelt werden, je nach Priorität.
 %
 %\subsection{UPS hab doppelt gearbeitet xD}
 
-\subsection{What is the purpose of a System Call?}
+\subsection{\important What is the purpose of a System Call?}
 System Calls werden verwendet um von dem User Mode aktionen im Kernel Mode zu initialisieren.
 
 \subsection{Describe what happens when at runtime when a program uses the function `getpid'.}
@@ -158,7 +158,7 @@ Funktion $\rightarrow$ User Mode Bibliothek $\rightarrow$ Syscall, Softwareinter
 \end{enumerate}
 Antwort C
 
-\subsection{Describe the anatomy of a Windows Subsystem.}
+\subsection{\important Describe the anatomy of a Windows Subsystem.}
 Programme benutzen Subsystems an der Stelle von APIs. Die Subsysteme sind dokumentieren und greifen auf undokumentierte Windows System Service Calls zu.
 
 \subsection{Compare the three types of Subsystem Service Calls.}
@@ -212,7 +212,7 @@ Monolithic Kernel: mächtiger Kern mit vielen Funktionen im Kernel Mode, wenig D
 Linux: Monolith
 Windows: (hybrider Kern), hauptsächlich Microkern
 
-\subsection{The Windows Kernel is Object Oriented. What is a Handle and what is its role?}
+\subsection{\important The Windows Kernel is Object Oriented. What is a Handle and what is its role?}
 Ein Handle ist ein Verweis auf ein existierendes Kernel Obejekt.
 Ein Handle gilt nur für jeweils einen Prozess. (Jeder Prozess hat eine eigene Handle Tabelle.)
 Ein Handle kann genutzt werden, um Systemfunktionen Kernel Objekten zu übergeben ohne das der Kernel diese Objekte ``preisgeben'' muss.

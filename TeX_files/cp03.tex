@@ -1,5 +1,6 @@
-\section{Checkpoint 3}
+\section{Checkpoint 3 - Scheduling}
 
+% align with slide numbers
 \addtocounter{subsection}{1}
 
 \subsection{What is a Programm? What is a Process? What is a Thread?}
@@ -7,7 +8,7 @@ Ein Programm ist eine ausf\"uhrbare Datei.\\
 Ein Prozess ist ein laufendes Programm.\\
 Ein Thread ist ein Ausf\"uhrungsstrang eines Programms.
 
-\subsection{What are the roles of the scheduler and the dispatcher?}
+\subsection{\important What are the roles of the scheduler and the dispatcher?}
 Der Scheduler hat die Aufgabe den laufenden Prozessen ihre CPU Zeit zuzuweisen.\\
 Der Dispatcher gibt die Kontrolle zum dem n\"achsten aktiven Thread(wiederherstellen des CPU Kontextes, vorbereiten des Adressbereiches f\"ur den n\"achsten Prozess).
 
@@ -23,7 +24,7 @@ Short-term scheduler(Sucht zu jedem Quantum einen neuen Thread aus, Scheduler \"
 	\item Beides: Nicewert(Priorit\"aten), ID
 \end{itemize}
 
-\subsection{Describe 3 properties related to the CPU context.}
+\subsection{\important Describe 3 properties related to the CPU context.}
 Prozessorstatuswort, Stackregister, Datenregister, Programmcounter
 
 \subsection{Outline the sequence of a context switch as performed by the dispatcher.}
@@ -33,7 +34,7 @@ Aktuellen Thread unterbrechen $\rightarrow$ Aktuellen Zustand sichern im Hauptsp
 \textbf{cooperative} freiwillige Abgabe der CPU\\
 \textbf{preemptive} Unterbrechung, wenn Quantum abgelaufen
 
-\subsection{What is a quantum? What effect does the length of a quantum have on the scheduler performance?}
+\subsection{\important What is a quantum? What effect does the length of a quantum have on the scheduler performance?}
 Ein Quantum ist eine feste Zeitscheibe, welche angibt wie lange ein Prozess rechnen darf, bis er unterbrochen wird. L\"angeres Quantum sorgt f\"ur eine h\"ohere Performanz. K\"urzeres Quantum ist responsiver.
 
 \subsection{Threads can have different states in relation to scheduling. Draw a diagram and Describe the purpose of the states and their transitions.}
@@ -46,7 +47,7 @@ Ein Quantum ist eine feste Zeitscheibe, welche angibt wie lange ein Prozess rech
 \subsection{When are scheduling decisions made?}
 Am Ende von jedem Quantum. Welcher Thread als n\"achstes in \textbf{running} darf. Immer wenn ein neuer thread im system ankommt.
 
-\subsection{What are the optimiztion criteria of a scheduler?}
+\subsection{\important What are the optimiztion criteria of a scheduler?}
 \begin{itemize}
 	\setlength\itemsep{-0.5em}
 	\item Resposivit\"at
@@ -161,11 +162,11 @@ Linux: PThreadcreate(), fork()\\Windows: CreateProcess(), CreateThread()
 \subsubsection{Name 2 functions related to process or thread termination.}
 Linux: exit(), pthreadexit()\\Windows: kill(), abort()
 
-\subsection{Compare the Linux semantics of process creation (fork/exec) to the windows semantics of process creation (CreateProcess).}
+\subsection{\important Compare the Linux semantics of process creation (fork/exec) to the windows semantics of process creation (CreateProcess).}
 Linux fork(), exec() habe ich 2 Funktionen in den ich Sachen machen kann.\\
 Windows in CreateProcess kann ich keine Sachen machen und ich habe nur eine Funktion. Parameter\"ubergabe f\"ur Pipes als Argument integriert.
 
-\subsection{What are the advantages and disadvantages of multithreading in a programm?}
+\subsection{\important What are the advantages and disadvantages of multithreading in a programm?}
 Wir m\"ussen unsere geteilten Resourcen vor einander sch\"utzen. Wir k\"onnen eine h\"ohere Auslastung des Systems erreichen.
 
 \subsection{Compare User Mode Threads to Kernel Mode Threads. When would you use which?}
@@ -226,7 +227,7 @@ Bitmaske, welche auf einem Multicore System festlegt auf welchen Core ich laufen
 Bei harter Affinit\"at kann dies manuell eingestellt werden.\\
 Bei softer Affinit\"at wird dem Thread zu erst der Core zugewiesen, welcher am besten ist. Beim Fortsetzen wird versucht wieder diesen Core zu benutzen da hier alle Daten schon vorhanden sind.
 
-\subsection{On a high level, outline the similarities and differences of the Windows and Linux Scheduler.}
+\subsection{\important On a high level, outline the similarities and differences of the Windows and Linux Scheduler.}
 Gemeinsamkeiten: Priorit\"aten\\
 Linux: Nicewerte\\
 Windows: \\
